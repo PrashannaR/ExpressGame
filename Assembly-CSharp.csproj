@@ -37,9 +37,14 @@
   </PropertyGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
+     <Compile Include="Assets\Background\CharacterMovement.cs" />
+     <Compile Include="Assets\Scripts\Grappling\Hook.cs" />
      <Compile Include="Assets\Scripts\Player\HealthSystem.cs" />
+     <Compile Include="Assets\Scripts\Grappling\Grapple.cs" />
      <Compile Include="Assets\Scripts\Player\Damage.cs" />
      <Compile Include="Assets\Scripts\Player\MouseLook.cs" />
+     <Compile Include="Assets\Scripts\Player\Health\PlayerHealth.cs" />
+     <Compile Include="Assets\Scripts\Player\Health\DamageHealth.cs" />
     <Reference Include="UnityEngine">
         <HintPath>C:/Program Files/Unity/Hub/Editor/2020.3.17f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

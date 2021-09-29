@@ -29,15 +29,16 @@ public class PlayerMovement : MonoBehaviour
     //camera 
     private Camera playerCamera;
 
-    //hook shot
-    private State state;
+  /* 
+    //hook
     [SerializeField] private Transform debugHitPoint;
     private Vector3 hookShotPosition;
-    
+    private State state;
     private enum State{
         Normal,
-        HookShotFly
-    }
+        HookShotPlayerFly
+
+    } */
 
 
 
@@ -45,9 +46,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake() {
         playerCamera = transform.Find("Camera").GetComponent<Camera>();
-
-        //hook
-        state = State.Normal;
+        //state = State.Normal;
+       
     }
 
     
@@ -63,10 +63,10 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        switch(state){
-            default:
-            case State.Normal:
-        
+      /* switch (state){
+          default:
+          case State.Normal:
+          
         //check ground
          isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
@@ -90,18 +90,44 @@ public class PlayerMovement : MonoBehaviour
             idle();
         }
 
-        //hook
-        HandleHookShotStart();
+        //hookshot
+       HandleHookShotStart();
+          break;
+
+        case State.HookShotPlayerFly:
+        HandleHookshotMovement();
+
         break;
 
 
-        //hook shot player fly
-        case State.HookShotFly:
-        HandleHookShotMovement();
-        break;
 
+      }//switch case */
 
-        }//switch
+              //check ground
+         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+
+        if(isGrounded && velocity.y < 0){
+            velocity.y = -2f;
+        }
+
+        //character movement
+        float x = Input.GetAxis("Horizontal");
+        float z = Input.GetAxis("Vertical");
+        
+        Vector3 move = transform.right * x + transform.forward * z;
+
+        if(move != Vector3.zero){
+             
+             controller.Move(move * speed * Time.deltaTime);
+             walk();
+           
+        }else{
+
+            idle();
+        }
+        
+
+      
 
     }//update
     
@@ -137,40 +163,33 @@ public class PlayerMovement : MonoBehaviour
         animator.SetFloat("Speed", 0f);
     }
    
+/*    private void HandleHookShotStart(){
 
-    //hook shot
-    private void HandleHookShotStart(){
+       if(Input.GetKeyDown(KeyCode.E)){
+          if( Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out RaycastHit raycastHit)){
+              //hit
+            debugHitPoint.position = raycastHit.point;
+            hookShotPosition = raycastHit.point;
+            state = State.HookShotPlayerFly;
+          }
+       }
 
-        if(Input.GetKeyDown(KeyCode.E)){
-         if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out RaycastHit raycastHit)){
+   }//HandleHookShotStart
 
-             //hit target
-             debugHitPoint.position = raycastHit.point;
-             hookShotPosition = raycastHit.point;
-             state = State.HookShotFly;
-         }
-        }
+   private void HandleHookshotMovement(){
+       //move character towards the shot
+       Vector3 hookShotDirection = (hookShotPosition - transform.position).normalized;
+       float hookShotSpeed = 5f;
+       controller.Move(hookShotDirection * hookShotSpeed * Time.deltaTime);
 
-    }//handle hook shot start
+        float reachedDistance = 1f;
+       if(Vector3.Distance(transform.position, hookShotPosition) < reachedDistance){
+           state = State.Normal;
+       }
 
-    private void HandleHookShotMovement(){
+   } */
 
-        Vector3 hookShotDirection = (hookShotPosition - transform.position).normalized;
-
-        float hookShotSpeed = 5f;
-        //move character
-        controller.Move(hookShotDirection * hookShotSpeed * Time.deltaTime);
-
-        //reset after reaching
-        float reachedHookShotDistance = 1f;
-        if(Vector3.Distance(transform.position, hookShotPosition) < reachedHookShotDistance){
-           
-           // state = State.Normal;
-           state = State.HookShotFly;
-
-
-        }
-    }//HandleHookShotMovement
+    
 
 
 
