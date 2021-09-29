@@ -29,6 +29,9 @@ public class HealthSystem : MonoBehaviour
     void Start()
     {
         HealthPoints = StartHealth;
+        slider.value = HealthPoints;
+        slider.maxValue = StartHealth;
+        slider.value = StartHealth;
     }//start
 
     void Die(){

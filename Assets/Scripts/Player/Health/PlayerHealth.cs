@@ -10,8 +10,6 @@ public class PlayerHealth : MonoBehaviour
     public float maxHealth;
     public Slider HealthSlider;
 
-    public DamageHealth damageHealth;
-    public float dValue;
 
 
     // Start is called before the first frame update
@@ -31,7 +29,10 @@ public class PlayerHealth : MonoBehaviour
             SendDamage(Random.Range(10,20));
         } 
 
-       // SendDamage(damageHealth.damagePoints);
+        if(Input.GetKeyDown(KeyCode.H)){
+            SendHeal(Random.Range(10,20));
+        }
+      
 
         if(currentHealth < 0){
             Destroy(gameObject);
@@ -40,6 +41,11 @@ public class PlayerHealth : MonoBehaviour
 
     public void SendDamage(float damageValue){
         currentHealth -= damageValue;
+        HealthSlider.value = currentHealth;
+    }
+    
+    public void SendHeal(float heal){
+        currentHealth += heal;
         HealthSlider.value = currentHealth;
     }
 }
